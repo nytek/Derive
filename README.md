@@ -3,4 +3,4 @@ Derive
 
 A psychogeographic random direction generator for walking.
 
-![](Derive/Derive/Default-568h@2x.png?raw=true)
+![](https://github.com/nytek/Derive/blob/master/Derive/Default-568h%402x.png?raw=true)
