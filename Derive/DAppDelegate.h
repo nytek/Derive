@@ -11,5 +11,8 @@
 @interface DAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic) NSTimeInterval walkTime;
+
+- (void)startWalkTimer;
 
 @end

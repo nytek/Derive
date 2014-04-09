@@ -7,6 +7,17 @@
 //
 
 #import "DAppDelegate.h"
+#import "DPictureViewController.h"
+#import "DWalkViewController.h"
+
+
+@interface DAppDelegate () <UIAlertViewDelegate>
+
+- (void)showDoneNotification;
+
+@property (nonatomic, strong) NSTimer *walkTimer;
+
+@end
 
 @implementation DAppDelegate
 
@@ -16,6 +27,14 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    DPictureViewController *pictureViewController = [[DPictureViewController alloc] initWithNibName:@"DPictureViewController" bundle:nil];
+    pictureViewController.pictureImage = [UIImage imageNamed:@"1instructions1.jpg"];
+    pictureViewController.navTitle = @"Direction";
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:pictureViewController];
+    [navController.navigationBar setHidden:YES];
+    self.window.rootViewController = navController;
+    
     return YES;
 }
 
@@ -29,6 +48,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -44,6 +64,31 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)startWalkTimer
+{
+    _walkTimer = [NSTimer scheduledTimerWithTimeInterval:_walkTime
+                                                  target:self
+                                                selector:@selector(showDoneNotification)
+                                                userInfo:nil
+                                                 repeats:NO];
+}
+
+- (void)showDoneNotification
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Walk finished!" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Start again", nil];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        DWalkViewController *walkViewController = [[DWalkViewController alloc] initWithNibName:@"DWalkViewController" bundle:nil];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:walkViewController];
+        [navController.navigationBar setHidden:YES];
+        [self.window setRootViewController:navController];
+    }
 }
 
 @end
